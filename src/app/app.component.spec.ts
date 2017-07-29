@@ -10,8 +10,7 @@ import { StoreModule } from '@ngrx/store';
 
 // Load the implementations that should be tested
 import { AppComponent } from './app.component';
-import { rootReducer } from './reducers';
-import { HomeActions } from './home/home.actions';
+import { reducers, metaReducers } from './reducers';
 
 describe(`App`, () => {
   let comp: AppComponent;
@@ -21,9 +20,9 @@ describe(`App`, () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ AppComponent ],
-      imports: [ StoreModule.provideStore(rootReducer) ],
+      imports: [ StoreModule.forRoot(reducers, {metaReducers}) ],
       schemas: [NO_ERRORS_SCHEMA],
-      providers: [HomeActions]
+      providers: []
     })
     .compileComponents(); // compile template and css
   }));

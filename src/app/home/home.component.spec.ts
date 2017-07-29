@@ -16,8 +16,7 @@ import { MockBackend } from '@angular/http/testing';
 import { StoreModule } from '@ngrx/store';
 
 // Load the implementations that should be tested
-import { rootReducer } from '../reducers';
-import { HomeActions } from './home.actions';
+import { reducers, metaReducers } from '../reducers';
 import { HomeComponent } from './home.component';
 import { Title } from './title';
 
@@ -29,7 +28,7 @@ describe(`Home`, () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [HomeComponent],
-      imports: [StoreModule.provideStore(rootReducer)],
+      imports: [StoreModule.forRoot(reducers, {metaReducers})],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         BaseRequestOptions,
@@ -41,7 +40,6 @@ describe(`Home`, () => {
           },
           deps: [MockBackend, BaseRequestOptions]
         },
-        HomeActions,
         Title,
       ]
     })
