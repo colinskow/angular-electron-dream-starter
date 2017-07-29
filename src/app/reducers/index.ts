@@ -1,15 +1,11 @@
 /*
  * Reducers: this file contains boilerplate code to handle debugging
- * in development mode, as well as integrate the store with HMR.
- * Customize your own reducers in `root.ts`.
+ * in development mode, implement root state, as well as integrate the store with HMR.
+ * Add additional feature state, and reducers in your feature modules.
  */
-import { compose } from '@ngrx/core/compose';
 import { ActionReducer, combineReducers, ActionReducerMap } from '@ngrx/store';
-import { storeFreeze } from 'ngrx-store-freeze';
 import { routerReducer, RouterReducerState } from '@ngrx/router-store';
 import * as fromHome from '../home';
-
-import { AppState } from './root';
 
 declare const ENV: string;
 
