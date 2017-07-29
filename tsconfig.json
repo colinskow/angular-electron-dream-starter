@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "module": "commonjs",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
@@ -17,8 +17,7 @@
       "es6"
     ],
     "typeRoots": [
-      "node_modules/@types",
-      "node_modules"
+      "node_modules/@types"
     ],
     "types": [
       "hammerjs",

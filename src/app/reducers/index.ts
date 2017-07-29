@@ -7,8 +7,9 @@ import { compose } from '@ngrx/core/compose';
 import { ActionReducer, combineReducers, ActionReducerMap } from '@ngrx/store';
 import { storeFreeze } from 'ngrx-store-freeze';
 import { routerReducer, RouterReducerState } from '@ngrx/router-store';
+import * as fromHome from '../home';
 
-export { reducers, AppState } from './root';
+import { AppState } from './root';
 
 declare const ENV: string;
 
