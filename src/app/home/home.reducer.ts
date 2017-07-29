@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 
-import { HomeActions } from './home.actions';
+import * as fromHome from './home.actions';
 
 export interface HomeState {
   value?: string;
@@ -8,10 +8,10 @@ export interface HomeState {
 
 export const initialState: HomeState = {};
 
-export function homeReducer(state = initialState, action: Action): HomeState {
+export function homeReducer(state = initialState, action: fromHome.Actions): HomeState {
   switch (action.type) {
 
-    case HomeActions.SET_VALUE: {
+    case fromHome.SET_VALUE: {
       return Object.assign({}, state, {
         value: action.payload
       });

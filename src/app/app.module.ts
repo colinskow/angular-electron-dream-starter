@@ -16,7 +16,7 @@ import {
 } from '@angular/router';
 
 import { EffectsModule } from '@ngrx/effects';
-import { RouterStoreModule } from '@ngrx/router-store';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
 import { Store } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -26,7 +26,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
  */
 import { ENV_PROVIDERS } from './environment';
 import { ROUTES } from './app.routes';
-import { rootReducer } from './reducers';
+import { reducers, metaReducers } from './reducers';
 // App is our top level component
 import { AppComponent } from './app.component';
 import { APP_BASE_HREF } from '@angular/common';
@@ -34,7 +34,6 @@ import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { InternalStateType } from './app.service';
 import { AppState } from './reducers';
 import { HomeComponent } from './home';
-import { HomeActions } from './home/home.actions';
 import { AboutComponent } from './about';
 import { NoContentComponent } from './no-content';
 import { XLargeDirective } from './home/x-large';
@@ -47,8 +46,7 @@ declare const ENV: string;
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
-  HomeActions,
-  { provide: APP_BASE_HREF, useValue : '/' }
+  { provide: APP_BASE_HREF, useValue: '/' }
 ];
 
 interface StoreType {
@@ -62,14 +60,14 @@ let CONDITIONAL_IMPORTS = [];
 
 if (ENV === 'development') {
   console.log('loading react devtools');
-  CONDITIONAL_IMPORTS.push(StoreDevtoolsModule.instrumentOnlyWithExtension());
+  CONDITIONAL_IMPORTS.push(StoreDevtoolsModule.instrument());
 }
 
 /**
  * `AppModule` is the main entry point into Angular2's bootstraping process
  */
 @NgModule({
-  bootstrap: [ AppComponent ],
+  bootstrap: [AppComponent],
   declarations: [
     AppComponent,
     AboutComponent,
@@ -81,10 +79,22 @@ if (ENV === 'development') {
     BrowserModule,
     FormsModule,
     HttpModule,
-    StoreModule.provideStore(rootReducer),
-    RouterStoreModule.connectRouter(),
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules }),
-    ...CONDITIONAL_IMPORTS
+    /**
+     * StoreModule.forRoot is imported once in the root module, accepting a reducer
+     * function or object map of reducer functions. If passed an object of
+     * reducers, combineReducers will be run creating your application
+     * meta-reducer. This returns all providers for an @ngrx/store
+     * based application.
+     */
+    StoreModule.forRoot(reducers, {metaReducers}),
+    /**
+     * @ngrx/router-store keeps router state up to date in the store.
+     */
+    StoreRouterConnectingModule,
+
+    EffectsModule.forRoot([]),
+    ...CONDITIONAL_IMPORTS,
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
@@ -97,13 +107,15 @@ export class AppModule {
     public appRef: ApplicationRef,
     // public appState: AppState,
     private _store: Store<AppState>
-  ) {}
+  ) { }
 
   public hmrOnInit(store: StoreType) {
     if (!store || !store.rootState) {
       return;
     }
-    console.log('HMR store', JSON.stringify(store, null, 2));
+    // Cannot JSON.stringify store, contains router state which has circular structure.
+    // replacer or serializer needed....
+    console.log('HMR store', store);
     // set state
     if (store.rootState) {
       this._store.dispatch({
@@ -127,7 +139,7 @@ export class AppModule {
     // recreate root elements
     store.disposeOldHosts = createNewHosts(cmpLocation);
     // save input values
-    store.restoreInputValues  = createInputTransfer();
+    store.restoreInputValues = createInputTransfer();
     // remove styles
     removeNgStyles();
   }

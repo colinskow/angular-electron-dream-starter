@@ -12,7 +12,6 @@ import { shell } from 'electron';
 import { AppState } from './reducers';
 import { Store } from '@ngrx/store';
 import { HomeState } from './home/home.reducer';
-import { HomeActions } from './home/home.actions';
 
 /*
  * App Component
@@ -74,7 +73,6 @@ export class AppComponent implements OnInit {
 
   constructor(
     private store: Store<AppState>,
-    private homeActions: HomeActions,
   ) {
     this.state$ = this.store.select(state => state.home);
   }

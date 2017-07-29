@@ -2,12 +2,12 @@ import {
   Component,
   OnInit
 } from '@angular/core';
-import { ipcRenderer } from 'electron';
+import * as electron from 'electron';
 
 import { Store } from '@ngrx/store';
 import { AppState } from '../reducers';
 import { HomeState } from './home.reducer';
-import { HomeActions } from './home.actions';
+import * as fromHome from './home.actions';
 import { Title } from './title';
 import { XLargeDirective } from './x-large';
 
@@ -31,7 +31,6 @@ export class HomeComponent implements OnInit {
   // TypeScript public modifiers
   constructor(
     private store: Store<AppState>,
-    private homeActions: HomeActions,
     public title: Title
   ) {}
 
@@ -42,11 +41,11 @@ export class HomeComponent implements OnInit {
 
   public submitState(value: string) {
     console.log('submitState', value);
-    this.store.dispatch(this.homeActions.setValue(value));
+    this.store.dispatch(new fromHome.SetValueAction(value));
     this.localState.value = '';
   }
 
   public showDialog() {
-    ipcRenderer.send('show-dialog');
+    electron.ipcRenderer.send('show-dialog');
   }
 }
