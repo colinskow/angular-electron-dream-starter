@@ -18,6 +18,7 @@ const dependencyExternals = require('./dependency-externals');
 const HtmlElementsPlugin = require('./html-elements-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
+const NoEmitOnErrorsPlugin = require('webpack/lib/NoEmitOnErrorsPlugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const ngcWebpack = require('ngc-webpack');
 const SpecifyTsFilesPlugin = require('./specify-ts-files-plugin');
@@ -223,6 +224,16 @@ module.exports = function (options) {
      * See: http://webpack.github.io/docs/configuration.html#plugins
      */
     plugins: [
+
+       /**
+       * Use the NoEmitOnErrorsPlugin to skip the emitting phase whenever
+       * there are errors while compiling. This ensures that no assets are 
+       * emitted that include errors.
+       *
+       * See: https://webpack.js.org/plugins/no-emit-on-errors-plugin/
+       */
+      new NoEmitOnErrorsPlugin(),
+
       new AssetsPlugin({
         path: helpers.root('dist'),
         filename: 'webpack-assets.json',

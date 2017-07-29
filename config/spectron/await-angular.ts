@@ -3,7 +3,7 @@ declare const document: any;
 declare const global: any;
 
 export function awaitAngular(client: any) {
-  client.timeoutsAsyncScript(5000);
+  client.timeouts('script', 5000);
   // From: https://github.com/angular/protractor/blob/master/lib/clientsidescripts.js
   // Returns a promise that resolves when all of Angular 2's components are loaded and stable
   return client.executeAsync(function(done: any) {

@@ -21,7 +21,6 @@
       "node_modules"
     ],
     "types": [
-      "electron",
       "hammerjs",
       "node",
       "source-map",

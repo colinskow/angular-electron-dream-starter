@@ -158,14 +158,20 @@ module.exports = function (options) {
             },
           ],
           vendor: [
-            '@angular/platform-browser',
-            '@angular/platform-browser-dynamic',
+            '@angular/animations',
             '@angular/core',
             '@angular/common',
             '@angular/forms',
             '@angular/http',
+            '@angular/platform-browser',
+            '@angular/platform-browser-dynamic',
             '@angular/router',
-            '@angularclass/hmr'
+            '@angularclass/hmr',
+            '@ngrx/core',
+            '@ngrx/effects',
+            '@ngrx/router-store',
+            '@ngrx/store',
+            '@ngrx/store-devtools'
           ]
         },
         dllDir: helpers.root('dll'),

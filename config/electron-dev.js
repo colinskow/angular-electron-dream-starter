@@ -29,7 +29,6 @@ config.plugins.push(
 const app = express();
 const compiler = webpack(config);
 
-
 const wdm = webpackDevMiddleware(compiler, {
   publicPath: '/',
   watchOptions: {
@@ -44,15 +43,22 @@ const wdm = webpackDevMiddleware(compiler, {
 app.use(wdm);
 app.use(webpackHotMiddleware(compiler));
 
-
 const server = app.listen(PORT, 'localhost', serverError => {
   if (serverError) {
     return console.error(serverError);
   }
 
-  spawn('npm', ['run', 'start:main:dev'], { shell: true, env: process.env, stdio: 'inherit' })
-    .on('close', code => process.exit(code))
-    .on('error', spawnError => console.error(spawnError));
+  // Launch Electron after the initial compile is complete
+  let started = false;
+  compiler.plugin('done', () => {
+    if(started) {
+      return;
+    }
+    spawn('npm', ['run', 'start:main:dev'], { shell: true, env: process.env, stdio: 'inherit' })
+      .on('close', code => process.exit(code))
+      .on('error', spawnError => console.error(spawnError));
+    started = true;
+  });
 
   console.log('Listening at http://localhost:' + PORT);
 });

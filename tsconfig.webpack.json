@@ -21,7 +21,6 @@
     ],
     "types": [
       "hammerjs",
-      "electron",
       "node"
     ]
   },

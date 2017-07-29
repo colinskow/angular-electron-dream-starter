@@ -8,6 +8,7 @@ const helpers = require('./helpers');
  * Webpack Plugins
  */
 const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
+const NoEmitOnErrorsPlugin = require('webpack/lib/NoEmitOnErrorsPlugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 const ElectronConnectWebpackPlugin = require('electron-connect-webpack-plugin');
 const SpecifyTsFilesPlugin = require('./specify-ts-files-plugin');
@@ -81,6 +82,7 @@ module.exports = function(options) {
     externals: [nodeExternals()],
 
     plugins: [
+      PROD ? new NoEmitOnErrorsPlugin() : null,
       new webpack.DefinePlugin(METADATA),
       new CheckerPlugin(),
       new webpack.IgnorePlugin(new RegExp("^(spawn-sync|bufferutil|utf-8-validate)$")),

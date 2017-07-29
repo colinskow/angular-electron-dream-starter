@@ -16,7 +16,7 @@ export function launchApp() {
   return new Application({
     path: electron,
     args: [appPath]
-  });
+  } as any);
 }
 
 export { awaitAngular };
