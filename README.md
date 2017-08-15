@@ -187,6 +187,27 @@ npm run test
 ```bash
 npm run watch:test
 ```
+When you watch tests you can debug them using the Chrome Debugger tools.  To do this, run 
+the above command, after the tests run, click on the Debug button in the Karam Electron 
+instance.  This opens the Karma Debug Runner window.  Open the Chrome dev tools in this 
+window (Ctrl-Shift-i).  Open the Sources tab, navigate the webpack:// item to find the 
+test case you want to debug.  Set a breakpoint, then refresh the view (Ctrl-R) to reload 
+the page.  Your break point should hit and you can debug and step through your code.
+<p align="center">
+  <img src="https://rawgit.com/colinskow/angular2-webpack-starter/electron/src/assets/img/debug_unittest.png" alt="Debug Unit Tests" width="300" height="300"/>
+</p>
+
+### watch and run all tests in a directory
+```bash
+npm run watch:test:grep -- app/about/
+```
+
+### watch and run a single test
+```bash
+npm run watch:test:grep -- app/about/about.component.spec.ts
+```
+
+This is useful for debugging a failing test case.  You can further narrow to just a single "it" function by placing an "f" (means focus on this test) in front of the failing test case ('fit').  Then only this file will be run while you debug.
 
 ### run end-to-end tests
 ```bash

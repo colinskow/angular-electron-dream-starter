@@ -66,8 +66,9 @@
     "test": "npm run lint && karma start",
     "tslint": "tslint",
     "typedoc": "typedoc",
-    "watch:test": "npm run test -- --auto-watch --no-single-run",
     "watch": "npm run build:dev:watch",
+    "watch:test": "npm run test -- --auto-watch --no-single-run",
+    "watch:test:grep": "npm run watch:test -- --grep",
     "webpack": "webpack"
   },
   "dependencies": {
@@ -142,6 +143,7 @@
     "karma-remap-coverage": "^0.1.4",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "~2.0.3",
+    "karma-webpack-grep": "^1.0.1",
     "mocha": "^3.4.2",
     "ncp": "^2.0.0",
     "ng-router-loader": "^2.1.0",

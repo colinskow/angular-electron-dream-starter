@@ -17,6 +17,7 @@ const dependencyExternals = require('./dependency-externals');
  * Webpack Constants
  */
 const ENV = process.env.ENV = process.env.NODE_ENV = 'test';
+const autowatched = process.env.npm_lifecycle_script.indexOf('--auto-watch') !== -1;
 
 /**
  * Webpack configuration
@@ -24,7 +25,7 @@ const ENV = process.env.ENV = process.env.NODE_ENV = 'test';
  * See: http://webpack.github.io/docs/configuration.html#cli
  */
 module.exports = function (options) {
-  return {
+  let config = {
 
     /**
      * Source map for Karma from the help of karma-sourcemap-loader &  karma-webpack
@@ -95,8 +96,8 @@ module.exports = function (options) {
               query: {
                 configFileName: 'tsconfig.karma.json',
                 // use inline sourcemaps for "karma-remap-coverage" reporter
-                sourceMap: false,
-                inlineSourceMap: true,
+                // sourceMap: false,
+                // inlineSourceMap: true,
                 compilerOptions: {
 
                   // Remove TypeScript helpers to be injected
@@ -157,22 +158,8 @@ module.exports = function (options) {
           exclude: [helpers.root('src/index.html')]
         },
 
-        /**
-         * Instruments JS files with Istanbul for subsequent code coverage reporting.
-         * Instrument only testing sources.
-         *
-         * See: https://github.com/deepsweet/istanbul-instrumenter-loader
-         */
-        {
-          enforce: 'post',
-          test: /\.(js|ts)$/,
-          loader: 'istanbul-instrumenter-loader',
-          include: helpers.root('src'),
-          exclude: [
-            /\.(e2e|spec)\.ts$/,
-            /node_modules/
-          ]
-        }
+        
+       
 
       ]
     },
@@ -263,4 +250,26 @@ module.exports = function (options) {
     } */
 
   };
+
+  // skip coverage in watch mode so source maps can be used for debugging
+  if (!autowatched) {
+    config.module.rules.push(      
+      /**
+         * Instruments JS files with Istanbul for subsequent code coverage reporting.
+         * Instrument only testing sources.
+         *
+         * See: https://github.com/deepsweet/istanbul-instrumenter-loader
+         */
+      {
+        enforce: 'post',
+        test: /\.(js|ts)$/,
+        loader: 'istanbul-instrumenter-loader',
+        include: helpers.root('src'),
+        exclude: [
+          /\.(e2e|spec)\.ts$/,
+          /node_modules/
+        ]
+      });
+  }
+  return config;
 }
