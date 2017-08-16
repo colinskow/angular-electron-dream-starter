@@ -194,7 +194,7 @@ window (Ctrl-Shift-i).  Open the Sources tab, navigate the webpack:// item to fi
 test case you want to debug.  Set a breakpoint, then refresh the view (Ctrl-R) to reload 
 the page.  Your break point should hit and you can debug and step through your code.
 <p align="center">
-  <img src="https://rawgit.com/colinskow/angular2-webpack-starter/electron/src/assets/img/debug_unittest.png" alt="Debug Unit Tests" width="300" height="300"/>
+  <img src="https://rawgit.com/colinskow/angular2-webpack-starter/electron/docs/img/debug_unittest.png" alt="Debug Unit Tests" width="300" height="300"/>
 </p>
 
 ### watch and run all tests in a directory
