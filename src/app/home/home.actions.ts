@@ -1,16 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
 import { Action } from '@ngrx/store';
 
-@Injectable()
+export const SET_VALUE = '[Home] Set Value';
 
-export class HomeActions {
-
-  public static SET_VALUE = '[Home] Set Value';
-  public setValue(value: string): Action {
-    return {
-      type: HomeActions.SET_VALUE,
-      payload: value
-    };
-  }
+export class SetValueAction implements Action {
+  public readonly type = SET_VALUE;
+  constructor(public payload: string) { }
 }
+
+// export type as all actions for typing action in reducer.
+export type Actions = SetValueAction;

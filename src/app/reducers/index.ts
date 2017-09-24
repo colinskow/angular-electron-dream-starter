@@ -1,21 +1,27 @@
 /*
  * Reducers: this file contains boilerplate code to handle debugging
- * in development mode, as well as integrate the store with HMR.
- * Customize your own reducers in `root.ts`.
+ * in development mode, implement root state, as well as integrate the store with HMR.
+ * Add additional feature state, and reducers in your feature modules.
  */
-import { compose } from '@ngrx/core/compose';
-import { ActionReducer, combineReducers } from '@ngrx/store';
-import { storeFreeze } from 'ngrx-store-freeze';
-import { storeLogger } from 'ngrx-store-logger';
-import { reducers } from './root';
-
-export { reducers, AppState } from './root';
+import { ActionReducer, combineReducers, ActionReducerMap } from '@ngrx/store';
+import { routerReducer, RouterReducerState } from '@ngrx/router-store';
+import * as fromHome from '../home';
 
 declare const ENV: string;
 
+export interface AppState {
+  router: RouterReducerState;
+  home: fromHome.HomeState;
+}
+
+export const reducers: ActionReducerMap<AppState> = {
+  router: routerReducer,
+  home: fromHome.homeReducer
+};
+
 // Generate a reducer to set the root state in dev mode for HMR
 function stateSetter(reducer: ActionReducer<any>): ActionReducer<any> {
-  return function(state, action) {
+  return function(state, action: any) {
     if (action.type === 'SET_ROOT_STATE') {
       return action.payload;
     }
@@ -23,15 +29,17 @@ function stateSetter(reducer: ActionReducer<any>): ActionReducer<any> {
   };
 }
 
-const DEV_REDUCERS = [stateSetter, storeFreeze, storeLogger()];
+export function logger(reducer: ActionReducer<AppState>): ActionReducer<any, any> {
+  return function(state: AppState, action: any): AppState {
+    console.log('state', state);
+    console.log('action', action);
 
-const developmentReducer = compose(...DEV_REDUCERS, combineReducers)(reducers);
-const productionReducer = compose(combineReducers)(reducers);
-
-export function rootReducer(state: any, action: any) {
-  if (ENV !== 'development') {
-    return productionReducer(state, action);
-  } else {
-    return developmentReducer(state, action);
-  }
+    return reducer(state, action);
+  };
 }
+
+export const metaReducers: Array<ActionReducer<any, any>> = ENV !== 'production'
+  // Dev Reducers
+  ? [stateSetter]
+  // Prod Reducers
+  : [];
