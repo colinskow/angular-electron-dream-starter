@@ -6,12 +6,13 @@
     <h4>Local State</h4>
 
     <form (ngSubmit)="submitState(localState)" autocomplete="off">
-
+      <p>Enter a value to be submitted to state.</p>
       <input
         [value]="localState.value"
         (input)="localState.value = $event.target.value"
         placeholder="Submit Local State to App State"
         autofocus>
+      <p>Enter a number to be multiplied in the main process by 2 and returned to the render process in state.</p>
       <input
         [value]="localState.computeValue"
         (input)="localState.computeValue = $event.target.value"
@@ -27,7 +28,7 @@
       -->
 
     <pre>this.localState = {{ localState | json }}</pre>
-
+    <p>The `valueComputed` property is the value returned from the main process</p>
   </div>
 
 </div>
