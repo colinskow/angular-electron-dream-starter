@@ -55,7 +55,7 @@ describe(`Home`, () => {
   });
 
   it('should have default data', () => {
-    expect(comp.localState).toEqual({ value: '' });
+    expect(comp.localState).toEqual({ value: '', computeValue: '' });
   });
 
   it('should have a title', () => {
