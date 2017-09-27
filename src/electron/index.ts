@@ -2,6 +2,8 @@ import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 import path from 'path';
 import url from 'url';
 import './dev-extensions';
+import { Observable } from 'rxjs';
+import rxIcp from 'rx-ipc-electron/lib/main';
 
 declare const DEV_SERVER: boolean;
 
@@ -57,6 +59,16 @@ app.on('activate', () => {
     createWindow();
   }
 });
+
+// Here is an example of utlizing observables for IPC(Inter Process Communication).
+// With help from 'rx-ipc-electron' by @ColinSkow
+// See https://github.com/colinskow/rx-ipc-electron for the full API.
+// This listener is called from an NGRX Effect in the home component of the app module.
+function listenForEffect(...args): Observable<any> {
+  return Observable.from(args).map(x => x * 2);
+}
+
+rxIcp.registerListener('listen-effect', listenForEffect);
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.

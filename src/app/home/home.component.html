@@ -5,13 +5,17 @@
   <div>
     <h4>Local State</h4>
 
-    <form (ngSubmit)="submitState(localState.value)" autocomplete="off">
+    <form (ngSubmit)="submitState(localState)" autocomplete="off">
 
       <input
         [value]="localState.value"
         (input)="localState.value = $event.target.value"
         placeholder="Submit Local State to App State"
         autofocus>
+      <input
+        [value]="localState.computeValue"
+        (input)="localState.computeValue = $event.target.value"
+        placeholder="Enter a number..">
 
       <button>Submit Value</button>
     </form>

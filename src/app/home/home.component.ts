@@ -27,7 +27,7 @@ import { XLargeDirective } from './x-large';
 })
 export class HomeComponent implements OnInit {
   // Set our default values
-  public localState = { value: '' };
+  public localState = { value: '', computeValue: '' };
   // TypeScript public modifiers
   constructor(
     private store: Store<AppState>,
@@ -39,10 +39,14 @@ export class HomeComponent implements OnInit {
     // this.title.getData().subscribe(data => this.data = data);
   }
 
-  public submitState(value: string) {
-    console.log('submitState', value);
-    this.store.dispatch(new home.SetValue(value));
+  public submitState(arg: any) {
+    console.log('submitState', arg.value);
+    this.store.dispatch(new home.SetValue(arg.value));
+    if (this.localState.computeValue) {
+      this.store.dispatch(new home.AddComputeValue(parseInt(arg.computeValue, 0)));
+    }
     this.localState.value = '';
+    this.localState.computeValue = '';
   }
 
   public showDialog() {

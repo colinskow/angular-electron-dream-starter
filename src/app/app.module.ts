@@ -35,6 +35,7 @@ import {
   AppState,
   CustomSerializer
 } from './reducers';
+import { HomeEffects } from './home/home.effects';
 // App is our top level component
 import { AppComponent } from './app.component';
 import { APP_BASE_HREF } from '@angular/common';
@@ -95,6 +96,7 @@ if (ENV === 'development') {
     HttpModule,
     StoreModule.forRoot(reducers),
     StoreRouterConnectingModule,
+    EffectsModule.forRoot([HomeEffects]),
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules }),
     ...CONDITIONAL_IMPORTS
   ],
