@@ -72,7 +72,8 @@
   },
   "dependencies": {
     "electron-devtools-installer": "^2.2.0",
-    "rxjs": "~5.4.0"
+    "rxjs": "~5.4.0",
+    "rx-ipc-electron": "^0.1.2"
   },
   "devDependencies": {
     "@angular/animations": "~4.4.3",
@@ -154,7 +155,6 @@
     "raw-loader": "0.5.1",
     "reflect-metadata": "^0.1.10",
     "rimraf": "~2.6.1",
-    "rx-ipc-electron": "^0.1.2",
     "sass-loader": "^6.0.5",
     "script-ext-html-webpack-plugin": "^1.8.1",
     "source-map-loader": "^0.2.1",
