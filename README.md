@@ -188,7 +188,7 @@ npm run test
 npm run watch:test
 ```
 When you watch tests you can debug them using the Chrome Debugger tools.  To do this, run 
-the above command, after the tests run, click on the Debug button in the Karam Electron 
+the above command, after the tests run, click on the Debug button in the Karma Electron 
 instance.  This opens the Karma Debug Runner window.  Open the Chrome dev tools in this 
 window (Ctrl-Shift-i).  Open the Sources tab, navigate the webpack:// item to find the 
 test case you want to debug.  Set a breakpoint, then refresh the view (Ctrl-R) to reload 
@@ -207,7 +207,7 @@ npm run watch:test:grep -- app/about/
 npm run watch:test:grep -- app/about/about.component.spec.ts
 ```
 
-This is useful for debugging a failing test case.  You can further narrow to just a single "it" function by placing an "f" (means focus on this test) in front of the failing test case ('fit').  Then only this file will be run while you debug.
+This is useful for debugging a failing test case.  You can further narrow to just a single "it" function by placing an "f" (means focus on this test) in front of the failing test case [see Jasmine Focused] (https://jasmine.github.io/2.1/focused_specs.html).  Then only this file will be run while you debug.
 
 ### run end-to-end tests
 ```bash
