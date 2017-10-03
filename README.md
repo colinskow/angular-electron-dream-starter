@@ -207,7 +207,7 @@ npm run watch:test:grep -- app/about/
 npm run watch:test:grep -- app/about/about.component.spec.ts
 ```
 
-This is useful for debugging a failing test case.  You can further narrow to just a single "it" function by placing an "f" (means focus on this test) in front of the failing test case [see Jasmine Focused] (https://jasmine.github.io/2.1/focused_specs.html).  Then only this file will be run while you debug.
+This is useful for debugging a failing test case.  You can further narrow to just a single "it" function by placing an "f" (means focus on this test) in front of the failing test case [see Jasmine Focused](https://jasmine.github.io/2.1/focused_specs.html).  Then only this file will be run while you debug.
 
 ### run end-to-end tests
 ```bash
