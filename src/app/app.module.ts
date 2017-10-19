@@ -71,10 +71,11 @@ let CONDITIONAL_IMPORTS = [];
 
 if (ENV === 'development') {
   console.log('loading react devtools');
-  CONDITIONAL_IMPORTS.push(StoreDevtoolsModule.instrument());
   // AoT won't allow metaReducers, so we need to add them conditionally
   // this should override the previous StoreModule declaration
   CONDITIONAL_IMPORTS.push(StoreModule.forRoot(reducers, { metaReducers }));
+  // Now connecting to DevModule.
+  CONDITIONAL_IMPORTS.push(StoreDevtoolsModule.instrument());
 }
 
 /**
