@@ -73,7 +73,8 @@
   },
   "dependencies": {
     "electron-devtools-installer": "^2.2.0",
-    "rxjs": "~5.4.0"
+    "rxjs": "~5.4.0",
+    "rx-ipc-electron": "^0.1.2"
   },
   "devDependencies": {
     "@angular/animations": "~4.4.3",

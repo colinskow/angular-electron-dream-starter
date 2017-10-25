@@ -283,6 +283,8 @@ You can make a module lazy load by using the `loadChildren` syntax in your route
 
 To make sure TypeScript compiles your lazy-loaded modules, declare them in `./src/app/lazy-loaded.ts` with an import statement. Declaring the modules allows TypeScript to only compile the necessary files. Previously TS would compile every single `.ts` file in your project tree on every single build which was inefficient and lead to issues.
 
+A note about lazy loading and Angular Preloading Strategies. This seed like its parent, implements a `PreloadAllModules` PreloadingStrategy on the router. This means that all lazy loaded routes not protected by a `CanLoad` guard will load in the background on the browser idle event. This can be confusing when working with asynchronous state and modules so please remember if you do not want the module to load in the background and be COMPLETELY lazy loaded on call, either protect it by a `CanLoad` guard or change the preloading strategy.
+
 # Contributing
 You can include more examples as components but they must introduce a new concept such as `Home` component (separate folders), and Todo (services). I'll accept pretty much everything so feel free to open a Pull-Request
 
