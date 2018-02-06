@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-let installOrRebuild = null;
+var installOrRebuild = null;
 try {
   installOrRebuild = require('electron-builder/out/util/yarn').installOrRebuild;
 } catch (e) {
