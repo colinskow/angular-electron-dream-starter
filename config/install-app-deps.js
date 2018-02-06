@@ -1,6 +1,11 @@
 const fs = require('fs');
 const path = require('path');
-const installOrRebuild = require('electron-builder/out/util/yarn').installOrRebuild;
+let installOrRebuild = null;
+try {
+  installOrRebuild = require('electron-builder/out/util/yarn').installOrRebuild;
+} catch (e) {
+  installOrRebuild = require('electron-builder-lib/out/util/yarn').installOrRebuild;
+}
 const printErrorAndExit = require('builder-util/out/promise').printErrorAndExit;
 
 const root = process.cwd();
@@ -34,7 +39,7 @@ function getElectronVersion(root) {
 }
 
 function writeAppPackage(metadata, appDir) {
-  const fields = ['name', 'productName', 'version', 'description', 'keywords', 
+  const fields = ['name', 'productName', 'version', 'description', 'keywords',
         'author', 'homepage', 'license', 'dependencies'];
   var output = {};
   fields.forEach(function(field) {
